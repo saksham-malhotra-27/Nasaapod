@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NASA Astronomy Picture of the Day</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      padding: 2rem;
+      max-width: 800px;
+      width: 100%;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    img, iframe {
+      width: 100%;
+      border-radius: 0.75rem;
+      margin: 1rem 0;
+      max-height: 500px;
+      object-fit: cover;
+    }
+
+    .date {
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+
+    .explanation {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .loading {
+      font-size: 1.2rem;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌌 NASA Astronomy Picture of the Day</h1>
+  <div id="apod" class="card">
+    <p class="loading">Loading content...</p>
+  </div>
+
+  <script>
+    const apodDiv = document.getElementById('apod');
+    fetch('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY')
+      .then(response => response.json())
+      .then(data => {
+        apodDiv.innerHTML = `
+          <h2>${data.title}</h2>
+          <p class="date">📅 ${data.date}</p>
+          ${
+            data.media_type === 'image' 
+              ? `<img src="${data.url}" alt="${data.title}" />` 
+              : `<iframe src="${data.url}" frameborder="0" allowfullscreen></iframe>`
+          }
+          <p class="explanation">${data.explanation}</p>
+        `;
+      })
+      .catch(error => {
+        apodDiv.innerHTML = `<p>Failed to load content. Try again later.</p>`;
+        console.error(error);
+      });
+  </script>
+</body>
+</html>
