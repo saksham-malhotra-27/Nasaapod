@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NASA Astronomy Picture of the Day</title>
   <style>
+    /* Basic styling for the page */
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -16,12 +17,14 @@
       padding: 2rem;
     }
 
+    /* Styling for the main header */
     h1 {
       font-size: 2rem;
       margin-bottom: 1rem;
       text-align: center;
     }
 
+    /* Card styling for the content container */
     .card {
       background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(10px);
@@ -32,6 +35,7 @@
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }
 
+    /* Styling for images and iframes */
     img, iframe {
       width: 100%;
       border-radius: 0.75rem;
@@ -40,16 +44,19 @@
       object-fit: cover;
     }
 
+    /* Styling for the date text */
     .date {
       color: #aaa;
       font-size: 0.9rem;
     }
 
+    /* Styling for the explanation text */
     .explanation {
       font-size: 1rem;
       line-height: 1.5;
     }
 
+    /* Styling for the loading message */
     .loading {
       font-size: 1.2rem;
       margin-top: 3rem;
@@ -57,16 +64,23 @@
   </style>
 </head>
 <body>
+  <!-- Main header of the page -->
   <h1>🌌 NASA Astronomy Picture of the Day</h1>
+  
+  <!-- Container for the APOD content -->
   <div id="apod" class="card">
     <p class="loading">Loading content...</p>
   </div>
 
   <script>
+    // Reference to the APOD content container
     const apodDiv = document.getElementById('apod');
+
+    // Fetch the APOD data from NASA's API
     fetch('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY')
-      .then(response => response.json())
+      .then(response => response.json()) // Parse the JSON response
       .then(data => {
+        // Populate the container with the fetched data
         apodDiv.innerHTML = `
           <h2>${data.title}</h2>
           <p class="date">📅 ${data.date}</p>
@@ -79,8 +93,9 @@
         `;
       })
       .catch(error => {
+        // Display an error message if the fetch fails
         apodDiv.innerHTML = `<p>Failed to load content. Try again later.</p>`;
-        console.error(error);
+        console.error(error); // Log the error in the console
       });
   </script>
 </body>
